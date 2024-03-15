@@ -1,0 +1,77 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "Debug",
+      "description": "Configure for debug build",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/debug",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER" : "clang++",
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "Release",
+      "description": "Configure for release build",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/release",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER" : "clang++",
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "ReleaseWithDeb",
+      "description": "Configure for release build with Debian package generation",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/release-with-deb",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CPACK_GENERATOR": "DEB"
+      }
+    },
+    {
+      "name": "ReleaseTestAsan",
+      "description": "Configure for release build with address sanitizer",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/release-test-asan",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "CMAKE_CXX_FLAGS": "-fsanitize=address"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "Debug",
+      "configurePreset": "Debug"
+    },
+    {
+      "name": "Release",
+      "configurePreset": "Release"
+    },
+    {
+      "name": "ReleaseWithDeb",
+      "configurePreset": "ReleaseWithDeb"
+    },
+    {
+      "name": "ReleaseTestAsan",
+      "configurePreset": "ReleaseTestAsan"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "Test",
+      "configurePreset": "ReleaseTestAsan",
+      "output": {
+        "outputOnFailure": true
+      }
+    }
+  ]
+}
