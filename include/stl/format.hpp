@@ -18,6 +18,8 @@ namespace stl
   using std::make_format_args;
   using std::forward;
   using std::make_wformat_args;
+  using std::format_string;
+  using std::wformat_string;
   
 namespace concepts
   {
@@ -37,14 +39,14 @@ namespace concepts
   }  // namespace concepts
 
 template<concepts::formattable<char>... Args>
-string format(basic_string<char> const & fmt, Args &&... args)
+string format(format_string<Args...> fmt, Args &&... args)
   {
-  return vformat(fmt, make_format_args(forward<Args>(args)...));
+  return vformat(fmt.get(), make_format_args(forward<Args>(args)...));
   }
 
 template<concepts::formattable<wchar_t>... Args>
-wstring format(basic_string<wchar_t> const & fmt, Args &&... args)
+wstring format(wformat_string<Args...> fmt, Args &&... args)
   {
-  return vformat(fmt, make_wformat_args(forward<Args>(args)...));
+  return vformat(fmt.get(), make_wformat_args(forward<Args>(args)...));
   }
   }  // namespace stl
