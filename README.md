@@ -14,6 +14,11 @@ The primary motivation behind `conceptstl` is the persistent issue of "horrible 
 - **Evaluate Performance Impact:** Investigate how the introduction of constraints affects compile performance especially compile time template instantiation, providing insights and benchmarks.
 - **Standard Compliance Exploration:** Through the lens of concepts, examine how closely the current implementations of STL types and functions align with their described requirements in the C++ standard, are there any logic holes ?.
 
+## AI-Assisted Development
+
+This project makes significant use of AI technologies to assist in generating code. The intricate nature of C++ concepts and the comprehensive coverage required for the STL means that manually coding each aspect is highly time-consuming. By leveraging AI, `conceptstl` aims to expedite the development process, focusing on the content's accuracy and validity. While AI helps in scaffolding and code generation, meticulous attention is dedicated to ensuring that the resulting implementations faithfully meet the complex requirements set forth by the C++ standards for concepts. This approach allows for a more efficient exploration of potential improvements to STL, making the development both innovative and grounded in solid engineering principles.
+
+
 ## Getting Started
 
 To begin exploring `conceptstl`, clone the repository or use CPM and add target dependency on conceptstl::header_only.
