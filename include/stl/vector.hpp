@@ -11,8 +11,7 @@ namespace stl
   {
 namespace concepts
   {
-  template<typename T>
-  concept destructible = std::destructible<T>;
+  using std::destructible;
   }  // namespace concepts
 
 /**
