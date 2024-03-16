@@ -10,6 +10,9 @@ struct Foo
 
 int main()
   {
-  stl::vector<Foo> t2;
+  stl::vector<Foo> t1;
+  (void)t1[0];
+  std::vector<Foo> t2;  // for -ftime-trace
+  (void)t2[0];
   }
 

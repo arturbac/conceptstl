@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(PROJECT_IS_TOP_LEVEL)
   add_compile_options("-stdlib=libc++" "-fexperimental-library")
-  set(CMAKE_CXX_FLAGS "-stdlib=libc++ -fexperimental-library") # required for override compile mode of ut add_compile_options doesn't override it'
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ -fexperimental-library") # required for override compile mode of ut add_compile_options doesn't override it'
   include(cmake/CPM.cmake)
 
   CPMAddPackage(

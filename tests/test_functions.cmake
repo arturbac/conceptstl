@@ -73,6 +73,10 @@ function(add_compile_success_test source_file)
   set(script_path_stdcxx "${CMAKE_BINARY_DIR}/check_compilation_libstdc++.sh")
   add_test(NAME test_${composed_name}_stdc++_compile_success
            COMMAND ${script_path_stdcxx} "${CMAKE_CURRENT_SOURCE_DIR}/${source_file}" TRUE)
+  if(ENABLE_TIME_TRACE_BUILD)
+    add_executable(test_${composed_name}_time_trace ${CMAKE_CURRENT_SOURCE_DIR}/${source_file} )
+    target_link_libraries( test_${composed_name}_time_trace PRIVATE conceptstl::header_only )
+  endif()
 endfunction()
 
 function(add_compile_failure_test source_file)

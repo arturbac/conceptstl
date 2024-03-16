@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSL-1.0
 
 #include <stl/format.hpp>
-#include <iostream>
+
 
 struct Foo
   {
@@ -21,5 +21,6 @@ struct std::formatter<Foo> : std::formatter<std::string>
 int main() 
 {
   Foo const foo{42};
-  std::cout << stl::format("{}", foo) << std::endl;
+  (void)stl::format("{}", foo);
+  (void)std::format("{}", foo); // for -ftime-trace
 }

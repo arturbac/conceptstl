@@ -1,49 +1,42 @@
 {
-  "version": 3,
+  "version": 6,
   "cmakeMinimumRequired": {
     "major": 3,
-    "minor": 21,
+    "minor": 23,
     "patch": 0
   },
   "configurePresets": [
     {
+      "name": "cfg-auto-build-dir",
+      "hidden": true,
+      "binaryDir": "${sourceDir}/build/${presetName}"
+    },
+    {
+      "name": "cfg-clang",
+      "generator": "Ninja",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang++"
+      }
+    },
+    {
       "name": "Debug",
       "description": "Configure for debug build",
-      "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/debug",
+      "inherits" : [ "cfg-clang" ],
       "cacheVariables": {
-        "CMAKE_CXX_COMPILER" : "clang++",
         "CMAKE_BUILD_TYPE": "Debug"
       }
     },
     {
-      "name": "Release",
+      "name": "release-time-trace",
       "description": "Configure for release build",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/release",
-      "cacheVariables": {
-        "CMAKE_CXX_COMPILER" : "clang++",
-        "CMAKE_BUILD_TYPE": "Release"
-      }
-    },
-    {
-      "name": "ReleaseWithDeb",
-      "description": "Configure for release build with Debian package generation",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/release-with-deb",
+      "binaryDir": "${sourceDir}/build/release-time-trace",
+      "inherits" :[ "cfg-auto-build-dir", "cfg-clang" ],
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
-        "CPACK_GENERATOR": "DEB"
-      }
-    },
-    {
-      "name": "ReleaseTestAsan",
-      "description": "Configure for release build with address sanitizer",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/release-test-asan",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
-        "CMAKE_CXX_FLAGS": "-fsanitize=address"
+        "CMAKE_CXX_FLAGS" : "-ftime-trace",
+        "ENABLE_TIME_TRACE_BUILD" : "ON"
       }
     }
   ],
@@ -53,25 +46,40 @@
       "configurePreset": "Debug"
     },
     {
-      "name": "Release",
-      "configurePreset": "Release"
-    },
-    {
-      "name": "ReleaseWithDeb",
-      "configurePreset": "ReleaseWithDeb"
-    },
-    {
-      "name": "ReleaseTestAsan",
-      "configurePreset": "ReleaseTestAsan"
+      "name": "release-time-trace",
+      "configurePreset": "release-time-trace"
     }
   ],
   "testPresets": [
     {
-      "name": "Test",
-      "configurePreset": "ReleaseTestAsan",
+      "name": "release-time-trace",
+      "configurePreset": "release-time-trace",
       "output": {
         "outputOnFailure": true
+      },
+      "execution": {
+        "jobs": 24
       }
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name" : "release-time-trace",
+      "description": "build with test execution clang-release-asan",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "release-time-trace"
+        },
+        {
+          "type": "build",
+          "name": "release-time-trace"
+        },
+        {
+          "type": "test",
+          "name": "release-time-trace"
+        }
+      ]
     }
   ]
 }
