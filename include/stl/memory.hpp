@@ -6,6 +6,7 @@
 #include <concepts>
 #include <type_traits>
 #include <iterator>
+#include <memory>
 
 namespace stl
   {
