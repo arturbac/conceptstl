@@ -18,6 +18,8 @@ struct std::formatter<Foo> : std::formatter<std::string>
     return std::formatter<std::string>::format(std::format("Foo{{bar: {}}}", foo.bar), ctx);
     }
   };
+static_assert( stl::ext::valid_formatter<std::formatter<Foo>,Foo>);
+
 static ut::suite _ = [] 
   {
     using namespace ut;

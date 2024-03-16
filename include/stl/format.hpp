@@ -74,6 +74,24 @@ auto format(wformat_string<Args...> fmt, Args &&... args) -> wstring
   {
   return vformat(fmt.get(), make_wformat_args(std::forward<Args>(args)...));
   }
+
+namespace ext
+  {
+  // clang-format off
+  template<typename Formatter, typename FormatType, typename CharT = char>
+  concept valid_formatter = std::semiregular<Formatter> &&
+    requires(
+      Formatter & f,
+      Formatter const & cf,
+      std::basic_format_parse_context<CharT> & parse_context, std::basic_format_context<std::back_insert_iterator<std::basic_string<CharT>>, CharT> & format_context,
+      FormatType const & obj
+    ) 
+    {
+      { f.parse(parse_context) } -> std::same_as<typename std::basic_format_parse_context<CharT>::iterator>;
+      { cf.format(obj, format_context) } -> std::same_as<decltype(format_context.out())>;
+    };
+  // clang-format on
+  }  // namespace ext
   }  // namespace stl
 
 // note: because 'cf.format(t, fc)' would be invalid: non-const lvalue reference to type

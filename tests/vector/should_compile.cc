@@ -7,12 +7,15 @@ struct Foo
   {
   ~Foo() = default;
   };
-
+struct Bar
+  {
+  ~Bar() = default;
+  };
 int main()
   {
   stl::vector<Foo> t1;
   (void)t1[0];
-  std::vector<Foo> t2;  // for -ftime-trace
+  std::vector<Bar> t2;  // for -ftime-trace
   (void)t2[0];
   }
 
