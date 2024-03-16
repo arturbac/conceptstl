@@ -12,7 +12,7 @@ struct Foo
 template<>
 struct std::formatter<Foo> : std::formatter<std::string>
   {
-  auto format(Foo const & foo, format_context & ctx) -> typename format_context::iterator
+  auto format(Foo const & foo, auto & ctx)
     {
     return std::formatter<std::string>::format(std::format("Foo{{bar: {}}}", foo.bar), ctx);
     }
@@ -21,7 +21,7 @@ struct std::formatter<Foo> : std::formatter<std::string>
 int main() 
 {
   Foo foo{42};
-  std::cout << std::format("{}", foo) << std::endl;
+  std::cout << stl::format("{}", foo) << std::endl;
 }
 
 
