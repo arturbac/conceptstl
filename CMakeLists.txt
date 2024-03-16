@@ -12,10 +12,10 @@ if(PROJECT_IS_TOP_LEVEL)
 
   CPMAddPackage(
     ut
-    GITHUB_REPOSITORY boost-ext/ut
+    GITHUB_REPOSITORY arturbac/ut-ext
     GIT_TAG        master
   )
-  find_package(ut REQUIRED)
+  find_package(ut-ext REQUIRED)
   
   add_library(Boost_ut_system INTERFACE)
   
